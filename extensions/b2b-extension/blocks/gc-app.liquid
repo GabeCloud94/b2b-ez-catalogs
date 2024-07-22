@@ -1,0 +1,16 @@
+{% if customer != nil %}
+  {% if customer.b2b? == true %}
+    <div style="position: fixed; left: 0; top: 20%; background: #fff; padding: 20px; z-index: 999;">
+      <h2>{{ customer.current_company.name }}</h2>
+    </div>
+
+  {% endif %}
+{% endif %}
+
+
+    {% schema %}
+      {
+        "name": "B2B Account Catalogs",
+        "target": "body"
+      }
+    {% endschema %}
