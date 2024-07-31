@@ -3,7 +3,7 @@
 client_id = "f79d62f6a2b9d573e100d80b3fa0bd8a"
 name = "B2B Catalog2Collection"
 handle = "b2b-app-19"
-application_url = "https://indie-adverse-stone-coral.trycloudflare.com"
+application_url = "https://mexico-organic-nut-burton.trycloudflare.com"
 embedded = true
 
 [build]
@@ -13,13 +13,13 @@ include_config_on_deploy = true
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "read_companies,read_product_listings,read_products,write_product_listings,write_products"
+scopes = "read_companies,read_product_listings,read_products,read_publications,write_product_listings,write_products,write_publications"
 
 [auth]
 redirect_urls = [
-  "https://indie-adverse-stone-coral.trycloudflare.com/auth/callback",
-  "https://indie-adverse-stone-coral.trycloudflare.com/auth/shopify/callback",
-  "https://indie-adverse-stone-coral.trycloudflare.com/api/auth/callback"
+  "https://mexico-organic-nut-burton.trycloudflare.com/auth/callback",
+  "https://mexico-organic-nut-burton.trycloudflare.com/auth/shopify/callback",
+  "https://mexico-organic-nut-burton.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

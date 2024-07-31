@@ -61,8 +61,23 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     return !existingCollections.has(collectionName) && !edge.node.inCatalog;
   });
 
+  const publicationsResponse = await admin.graphql(
+    `#graphql
+    query publications {
+      publications(first: 1) {
+        edges {
+          node {
+            id
+          }
+        }
+      }
+    }`,
+  );
+  const publicationsData = await publicationsResponse.json();
+
   return json({
-    companyLocations: filteredCompanyLocations
+    companyLocations: filteredCompanyLocations,
+    publicationsData
   });
 }
 
@@ -77,6 +92,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const selectedCompanyNames = formData.getAll('selectedCompanyNames');
   const selectedCompanyIds = formData.getAll('selectedCompanyIds');
   const selectedCompanyExternalIds = formData.getAll('selectedCompanyExternalIds');
+  const publicationsData = JSON.parse(formData.get('publicationsData') as string);
+
+  const publicationId = publicationsData.data.publications.edges[0]?.node.id;
 
   const results = await Promise.all(selectedCompanyNames.map(async (companyName, index) => {
     const companyId = selectedCompanyIds[index];
@@ -114,6 +132,38 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       }
     );
     const collectionData = await collectionResponse.json();
+
+    const collectionId = collectionData.data.collectionCreate.collection.id;
+
+    // publishablePublish collection
+    const publishablePublishResponse = await admin.graphql(
+      `#graphql
+  mutation publishablePublish($id: ID!, $input: [PublicationInput!]!) {
+    publishablePublish(id: $id, input: $input) {
+      publishable {
+        availablePublicationsCount {
+          count
+        }
+        resourcePublicationsCount {
+          count
+        }
+      }
+      userErrors {
+        field
+        message
+      }
+    }
+  }`,
+  {
+    variables: {
+      id: collectionId,
+      input: [{
+        publicationId: publicationId,
+      }],
+    }
+  }
+);
+    const publishablePublishData = await publishablePublishResponse.json();
 
     
       const catalogsResponse = await admin.graphql(
@@ -220,7 +270,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     }
   
 
-    return { collectionData, catalogsData, updateResponseDataArray, productsResponseDataArray, tagsResponseDataArray };
+    return { collectionData, catalogsData, updateResponseDataArray, publishablePublishData, productsResponseDataArray, tagsResponseDataArray };
 
   }));
 
@@ -231,7 +281,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
 
 export default function ManageCollections() {
-  const { companyLocations } = useLoaderData<typeof loader>();
+  const { companyLocations, publicationsData } = useLoaderData<typeof loader>();
   const submit = useSubmit();
 
   const collections = companyLocations.map(({ node }: { node: { id: string, name: string, externalId: string } }) => ({
@@ -272,6 +322,7 @@ export default function ManageCollections() {
         formData.append('selectedCompanyExternalIds', company.externalId);
       }
     });
+    formData.append('publicationsData', JSON.stringify(publicationsData));
     submit(formData, { method: 'post' });
   };
 
