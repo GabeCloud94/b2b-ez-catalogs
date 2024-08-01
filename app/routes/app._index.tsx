@@ -47,14 +47,14 @@ export default function Index() {
       </TitleBar>
       <BlockStack gap="500">
         <img style={{maxWidth:1000, width:'99%'}} width={1000} src={`/instructions.jpg`} alt="instructions" />
-        <Text variant="headingXl" as="h4">How to Manually Install:</Text>
+        <Text variant="headingXl" as="h4">Installation Instructions</Text>
         <List type="number">
-          <List.Item>Select the theme you'd like to install the app on, and hit "Customize".</List.Item>
-          <List.Item>Select "App Embeds" from the menu on the left side.</List.Item>
-          <List.Item>Select and toggle the app embed to "On".</List.Item>
-          <List.Item>Click "Save" in the upper-right corner.</List.Item>
+          <List.Item>Click the green "Install" button below.</List.Item>
+          <List.Item>Hit the "Save" button in the top-right corner.</List.Item>
+          <List.Item>Come back to this app's "Manage Collections" tab on the left-hand side.</List.Item>
+          <List.Item>On that page, select all locations and hit the "Create collections" button to create a collection for each location in your store.</List.Item>
+          <List.Item>Now, your B2B customers have a list of collections with their assigned company location's catalogs with B2B pricing.</List.Item>
         </List>
-        <Text variant="headingSm" as="h6">Or simply click the button below to automatically install the app on your live theme.</Text>
         <Button variant="primary" tone="success" onClick={handleDeepLink}>
           Install
         </Button>

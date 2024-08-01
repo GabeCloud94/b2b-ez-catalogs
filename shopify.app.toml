@@ -3,7 +3,7 @@
 client_id = "f79d62f6a2b9d573e100d80b3fa0bd8a"
 name = "B2B Catalog2Collection"
 handle = "b2b-app-19"
-application_url = "https://mexico-organic-nut-burton.trycloudflare.com"
+application_url = "https://tiles-recorders-democratic-aging.trycloudflare.com"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "read_companies,read_product_listings,read_products,read_publications,w
 
 [auth]
 redirect_urls = [
-  "https://mexico-organic-nut-burton.trycloudflare.com/auth/callback",
-  "https://mexico-organic-nut-burton.trycloudflare.com/auth/shopify/callback",
-  "https://mexico-organic-nut-burton.trycloudflare.com/api/auth/callback"
+  "https://tiles-recorders-democratic-aging.trycloudflare.com/auth/callback",
+  "https://tiles-recorders-democratic-aging.trycloudflare.com/auth/shopify/callback",
+  "https://tiles-recorders-democratic-aging.trycloudflare.com/api/auth/callback"
 ]
 
 [webhooks]

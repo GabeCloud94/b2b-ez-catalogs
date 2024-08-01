@@ -1,16 +1,30 @@
 {% if customer != nil %}
   {% if customer.b2b? == true %}
-    <div style="position: fixed; left: 0; top: 20%; background: #fff; padding: 20px; z-index: 999;">
-      <h2>{{ customer.current_company.name }}</h2>
-    </div>
+    <div id="gc-b2b" style="position: fixed; left: 0; top: 20%; background: rgba( 255, 255, 255, 0.2); backdrop-filter: blur(8px); padding: 20px; z-index: 999; border-radius: 0 10px 10px 0; max-height: 600px; overflow-y: scroll;">
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        {% for location in customer.company_available_locations %}
 
+          <a href="/collections/{{ location.name |  handleize }}-catalog">
+            <h2>{{ location.name }} Catalog</h2>
+          </a>
+
+        {% endfor %}
+      </div>
+    </div>
   {% endif %}
 {% endif %}
 
+{% if template.name contains 'collection' %}
+  <style>
+    #gc-b2b {
+      display: none !important;
+    }
+  </style>
+{% endif %}
 
-    {% schema %}
-      {
-        "name": "B2B Account Catalogs",
-        "target": "body"
-      }
-    {% endschema %}
+{% schema %}
+  {
+    "name": "B2B Account Catalogs",
+    "target": "body"
+  }
+{% endschema %}
